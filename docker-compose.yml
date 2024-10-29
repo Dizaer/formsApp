@@ -1,0 +1,9 @@
+services:
+  angular:
+    image: angular:17
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ng serve --host 0.0.0.0 --disable-host-check
