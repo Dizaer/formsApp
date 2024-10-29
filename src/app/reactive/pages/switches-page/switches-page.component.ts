@@ -59,7 +59,6 @@ export class SwitchesPageComponent implements OnInit {
     this.person = newPerson;
     console.log(this.myForm.value);
     console.log(this.person);
-    
   }
 
 }
