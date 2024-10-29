@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidatorService } from '../../../shared/services/validators.service';
 
 @Component({
   templateUrl: './switches-page.component.html'
@@ -17,34 +18,21 @@ export class SwitchesPageComponent implements OnInit {
     wantNotifications: false
   }
 
-  constructor( private fb: FormBuilder ) {}
+  constructor( 
+    private fb: FormBuilder, 
+    private validatorService: ValidatorService
+  ) {}
 
   ngOnInit(): void {
     this.myForm.reset( this.person )
   }
 
   isValidField( field: string ):boolean | null {
-    return this.myForm.controls[ field ].errors
-     && this.myForm.controls[ field ].touched;
+    return this.validatorService.isValidField( this.myForm, field);
   }
 
   getFieldError( field: string ): string | null {
-
-    if ( !this.myForm.controls[field] ) return null;
-
-    const errors = this.myForm.controls[field].errors || {};
-
-    for (const key of Object.keys(errors) ) {
-      switch( key ){
-        case 'required':
-          return 'Este campo es requerido';
-
-        case 'minlength':
-          return `Mínimo ${ errors['minlength'].requiredLength } caracteres.`;
-      }
-    }
-
-    return null;
+    return this.validatorService.getFieldError( this.myForm, field )
   }
 
 
